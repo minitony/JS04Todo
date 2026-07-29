@@ -4,7 +4,7 @@ import TodoForm from './TodoForm';
 import useTodo from '../hooks/useTodo';
 
 function TodoList() {
-  const { todos, addTodo, deleteTodo } = useTodo();
+  const { todos, addTodo, deleteTodo, toggleTodo, updateTodoText } = useTodo();
 
   return (
     <div>
@@ -15,6 +15,8 @@ function TodoList() {
             key={todo.id}
             todo={todo}
             onDelete={deleteTodo}
+            onToggle={toggleTodo}
+            onEdit={updateTodoText}
           />
         ))}
       </ul>
