@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TodoItem from './TodoItem';
 import TodoForm from './TodoForm';
+import useTodo from '../hooks/useTodo';
 
 function TodoList() {
-  const [todos, setTodos] = useState([]);
-
-  const addTodo = (text) => {
-    setTodos([...todos, { id: Date.now(), text, completed: false }]);
-  };
-
-  const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  };
+  const { todos, addTodo, deleteTodo } = useTodo();
 
   return (
     <div>
