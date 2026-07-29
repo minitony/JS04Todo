@@ -1,6 +1,18 @@
 import React from 'react';
 
 function TodoItem({ todo, onDelete, onToggle, onEdit }) {
+  const [editMode, setEditMode] = React.useState(false);
+  const [editText, setEditText] = React.useState(todo.text);
+  
+  const handleEdit = () => {
+    setEditMode(true);
+  };
+
+  const handleSave = () => {
+    onEdit(todo.id, editText);
+    setEditMode(false);
+  };
+
   const handleDelete = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -10,7 +22,7 @@ function TodoItem({ todo, onDelete, onToggle, onEdit }) {
   };
 
   return (
-    <li style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '8px 0' }}>
+    <li style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '8px 0' }}> 
       <input
         type="checkbox"
         checked={todo.completed}
@@ -22,8 +34,21 @@ function TodoItem({ todo, onDelete, onToggle, onEdit }) {
       }}>
         {todo.text}
       </span>
-      <button onClick={() => onEdit(todo.id, todo.text)}>Edit</button>
-      <button onClick={handleDelete}>Delete</button>
+      {editMode ? (
+        <div style={{ marginLeft: '8px' }}>
+          <input
+            type="text"
+            value={editText}
+            onChange={(e) => setEditText(e.target.value)}
+            onBlur={handleSave}
+            style={{ width: '100%' }}
+          />
+          <button onClick={handleSave} style={{ marginLeft: '8px' }}>Save</button>
+        </div>
+      ) : (
+        <button onClick={handleEdit} style={{ marginLeft: '8px' }}>Edit</button>
+      )}
+      <button onClick={handleDelete} style={{ marginLeft: '8px' }}>Delete</button>
     </li>
   );
 }
