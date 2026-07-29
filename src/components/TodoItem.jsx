@@ -1,6 +1,14 @@
 import React from 'react';
 
 function TodoItem({ todo, onDelete, onToggle, onEdit }) {
+  const handleDelete = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (window.confirm('このTodoを削除しますか？')) {
+      onDelete(todo.id);
+    }
+  };
+
   return (
     <li style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '8px 0' }}>
       <input
@@ -15,7 +23,7 @@ function TodoItem({ todo, onDelete, onToggle, onEdit }) {
         {todo.text}
       </span>
       <button onClick={() => onEdit(todo.id, todo.text)}>Edit</button>
-      <button onClick={() => onDelete(todo.id)}>Delete</button>
+      <button onClick={handleDelete}>Delete</button>
     </li>
   );
 }
